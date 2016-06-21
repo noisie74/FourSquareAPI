@@ -2,6 +2,7 @@ package mikhail.com.foursquareapi.model;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,17 +24,17 @@ public class FoursquareSearch {
 
     public class response {
 
-        private List<venues> venues;
+        public ArrayList<venues> venues;
 
-        public List<FoursquareSearch.response.venues> getVenues() {
-            return venues;
-        }
+//        public List<FoursquareSearch.response.venues> getVenues() {
+//            return venues;
+//        }
 
         public class venues {
             public String id;
             public String name;
             public location location;
-            public List<categories> categories;
+            public ArrayList<categories> categories;
             public Bitmap bitmap;
 
             public class location {

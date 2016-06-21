@@ -44,16 +44,9 @@ public class FourSquareAPI {
 
     public interface getNearPlace {
         @GET("venues/search")
-        Call <List<FoursquareSearch.response.venues>> searchResults(@Query("ll") String ll,
+        Call <FoursquareSearch> searchResults(@Query("ll") String ll,
                           @Query("oauth_token") String oauth_token,
                           @Query("v") String v);
     }
 
-    public static getNearPlace create() {
-        return new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(FourSquareAPI.getNearPlace.class);
-    }
 }
