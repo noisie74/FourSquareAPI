@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * Created by Mikhail on 6/17/16.
  */
-public class Groups {
-
-    public List<Items> items;
-
-}
+//public class Groups {
+//
+//    public List<Items> items;
+//
+//}

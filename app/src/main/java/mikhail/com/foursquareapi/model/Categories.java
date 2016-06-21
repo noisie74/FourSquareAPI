@@ -7,15 +7,15 @@ import com.google.gson.annotations.SerializedName;
  */
 
 
-public class Categories {
-
-    public String name;
-    public icon icon;
-
-    public class icon {
-        @SerializedName("suffix")
-        public String iconID;
-        @SerializedName("prefix")
-        public String iconURL;
-    }
-}
+//public class Categories {
+//
+//    public String name;
+//    public icon icon;
+//
+//    public class icon {
+//        @SerializedName("suffix")
+//        public String iconID;
+//        @SerializedName("prefix")
+//        public String iconURL;
+//    }
+//}
