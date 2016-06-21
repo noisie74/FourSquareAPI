@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +18,7 @@ import mikhail.com.foursquareapi.R;
 import mikhail.com.foursquareapi.interfaces.IClickItem;
 //import mikhail.com.foursquareapi.model.Categories;
 import mikhail.com.foursquareapi.model.FoursquareSearch;
+import mikhail.com.foursquareapi.util.CircleTransform;
 //import mikhail.com.foursquareapi.model.Response;
 //import mikhail.com.foursquareapi.model.Venue;
 
@@ -25,22 +27,17 @@ import mikhail.com.foursquareapi.model.FoursquareSearch;
  */
 public class FourSquareAdapter extends RecyclerView.Adapter<FourSquareAdapter.ViewHolder> {
 
-//    private List<Venue> fourSquareVenues;
     private IClickItem iClickItem;
-    private ArrayList<FoursquareSearch.response> searchResults;
-    Context context;
+    private ArrayList<FoursquareSearch.response> venues;
+    public Context context;
 
-//    public FourSquareAdapter(List<Venue> fourSquareVenues){
-//        this.fourSquareVenues = fourSquareVenues;
-////        this.iClickItem = iClickItem;
-//    }
 
-    public FourSquareAdapter(ArrayList<FoursquareSearch.response>  venues){
-        this.searchResults = venues;
+    public FourSquareAdapter(ArrayList<FoursquareSearch.response> venues) {
+        this.venues = venues;
 //        this.iClickItem = iClickItem;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
 
         @BindView(R.id.place_name)
@@ -52,15 +49,14 @@ public class FourSquareAdapter extends RecyclerView.Adapter<FourSquareAdapter.Vi
 
         public View parentView;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             super(view);
             this.parentView = view;
 
 
-
             try {
-                ButterKnife.bind(this,view);
-            }catch (Exception e){
+                ButterKnife.bind(this, view);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -78,35 +74,31 @@ public class FourSquareAdapter extends RecyclerView.Adapter<FourSquareAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        Venue data = fourSquareVenues.get(position);
-//        Categories categories = data.categories.get(position);
-//        FoursquareSearch.response data = searchResults.get(position).;
-//        FoursquareSearch.response.venues.get(position) categories = data.categories.get(position).name;
-//        bindData(data,holder);
-        holder.placeName.setText(searchResults.get(position).venues.get(position).name);
-        holder.placeCategory.setText(searchResults.get(position).venues.get(position).categories.get(position).name);
+        holder.parentView.setTag(holder);
+        holder.placeName.setText(venues.get(position).venues.get(position).name);
+        holder.placeCategory.setText(venues.get(position).venues.get(position).categories.get(position).name);
+
+        holder.parentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Glide.with(context).load(venues.get(position).venues.get(position).categories.get(position).icon.prefix +
+                venues.get(position).venues.get(position).categories.get(position).icon.suffix)
+                .placeholder(R.drawable.placeholder)
+                .transform(new CircleTransform(context))
+                .into(holder.placeIcon);
 
     }
 
     @Override
     public int getItemCount() {
-        return searchResults.size();
+        return venues.size();
     }
 
 
-//    private void bindData(final Venue data, ViewHolder holder) {
-//        holder.parentView.setTag(holder);
-//        holder.placeName.setText(data.name);
-////        holder.placeCategory.setText(categories.name);
-
-
-//        holder.parentView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-    }
+}
 
 
