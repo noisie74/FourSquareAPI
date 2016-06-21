@@ -7,9 +7,8 @@ import java.util.List;
 /**
  * Created by Mikhail on 6/17/16.
  */
-//public class Places {
+//public class Items {
 //
-//    public Response response;
-//
+//    public List<Venue> venues;
 //
 //}
