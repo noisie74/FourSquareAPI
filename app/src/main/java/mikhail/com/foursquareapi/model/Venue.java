@@ -8,6 +8,6 @@ import java.util.List;
 //public class Venue {
 //
 //    public String name;
-//    public List<Categories> categories;
+//    public List<Categories> categoriesObj;
 //
 //}

@@ -2,7 +2,8 @@ package mikhail.com.foursquareapi.model;
 
 import android.graphics.Bitmap;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -24,17 +25,15 @@ public class FoursquareSearch {
 
     public class response {
 
-        public ArrayList<venues> venues;
+        public List<VenuesObj> venues;
 
-//        public List<FoursquareSearch.response.venues> getVenues() {
-//            return venues;
-//        }
 
-        public class venues {
+        public class VenuesObj {
             public String id;
             public String name;
             public location location;
-            public ArrayList<categories> categories;
+            @SerializedName("categoriesObj")
+            public List<categoriesObj> categories;
             public Bitmap bitmap;
 
             public class location {
@@ -45,9 +44,10 @@ public class FoursquareSearch {
                 public String country;
             }
 
-            public class categories {
+            public class categoriesObj {
 
                 public String id;
+                @SerializedName("name")
                 public String name;
                 public String pluralName;
                 public String shortName;
