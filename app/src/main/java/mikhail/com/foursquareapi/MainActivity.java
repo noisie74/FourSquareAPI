@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import mikhail.com.foursquareapi.adapter.FourSquareAdapter;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerView;
     private FourSquareAdapter fourSquareAdapter;
-    private ArrayList<FoursquareSearch.response.VenuesObj> list;
+    private ArrayList<FoursquareSearch.response.VenuesObj> listOfVenues;
 
     public final String coordinates = "37.809,-122.273";
     public final String token = "JCWKUHGL0GRSEKVGC2A5TAOAAAR3S1AXIW0CLTYTJWYPCD55";
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private void setViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<>();
+        listOfVenues = new ArrayList<>();
     }
 
 
@@ -62,13 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
                 FoursquareSearch foursquareSearch = response.body();
 
-                List<FoursquareSearch.response.VenuesObj> temp = foursquareSearch.getResponse().venues;
+                List<FoursquareSearch.response.VenuesObj> venuesObjs = foursquareSearch.getResponse().venues;
 
-//                Collections.addAll(list, temp);
-                list.addAll(temp);
+                listOfVenues.addAll(venuesObjs);
 
 
-                fourSquareAdapter = new FourSquareAdapter(list);
+                fourSquareAdapter = new FourSquareAdapter(listOfVenues);
                 recyclerView.setAdapter(fourSquareAdapter);
                 fourSquareAdapter.notifyDataSetChanged();
                 Log.d("MainActivity", "Call success!");
