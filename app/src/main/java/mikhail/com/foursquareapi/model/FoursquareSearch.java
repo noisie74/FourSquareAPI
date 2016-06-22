@@ -24,13 +24,13 @@ public class FoursquareSearch {
 
     public class response {
 
-        public ArrayList<venues> venues;
+        public List<VenuesObj> venues;
 
 //        public List<FoursquareSearch.response.venues> getVenues() {
 //            return venues;
 //        }
 
-        public class venues {
+        public class VenuesObj {
             public String id;
             public String name;
             public location location;

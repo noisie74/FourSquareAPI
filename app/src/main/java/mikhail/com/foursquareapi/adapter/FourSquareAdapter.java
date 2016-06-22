@@ -28,12 +28,12 @@ import mikhail.com.foursquareapi.util.CircleTransform;
 public class FourSquareAdapter extends RecyclerView.Adapter<FourSquareAdapter.ViewHolder> {
 
     private IClickItem iClickItem;
-    private ArrayList<FoursquareSearch.response> venues;
+    private ArrayList<FoursquareSearch.response.VenuesObj> list;
     public Context context;
 
 
-    public FourSquareAdapter(ArrayList<FoursquareSearch.response> venues) {
-        this.venues = venues;
+    public FourSquareAdapter(ArrayList<FoursquareSearch.response.VenuesObj> list) {
+        this.list = list;
 //        this.iClickItem = iClickItem;
     }
 
@@ -75,27 +75,27 @@ public class FourSquareAdapter extends RecyclerView.Adapter<FourSquareAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.parentView.setTag(holder);
-        holder.placeName.setText(venues.get(position).venues.get(position).name);
-        holder.placeCategory.setText(venues.get(position).venues.get(position).categories.get(position).name);
+        holder.placeName.setText(list.get(position).name);
+////        holder.placeCategory.setText(list.get(position).categories.get(position).name);
+//
+//        holder.parentView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
-        holder.parentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        Glide.with(context).load(venues.get(position).venues.get(position).categories.get(position).icon.prefix +
-                venues.get(position).venues.get(position).categories.get(position).icon.suffix)
-                .placeholder(R.drawable.placeholder)
-                .transform(new CircleTransform(context))
-                .into(holder.placeIcon);
+//        Glide.with(context).load(list.get(position).categories.get(position).icon.prefix +
+//                list.get(position).categories.get(position).icon.suffix)
+//                .placeholder(R.drawable.placeholder)
+//                .transform(new CircleTransform(context))
+//                .into(holder.placeIcon);
 
     }
 
     @Override
     public int getItemCount() {
-        return venues.size();
+        return list.size();
     }
 
 
