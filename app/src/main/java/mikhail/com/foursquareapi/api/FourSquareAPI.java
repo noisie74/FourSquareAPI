@@ -17,10 +17,13 @@ import rx.Observable;
 /**
  * Created by Mikhail on 6/17/16.
  */
-public class FourSquareAPI {
+public interface FourSquareAPI {
 
-    public static final String API_URL = "https://api.foursquare.com/v2/";
 
+    @GET("venues/search")
+    Call<FoursquareSearch> searchResults(@Query("ll") String ll,
+                                         @Query("oauth_token") String oauth_token,
+                                         @Query("v") String v);
 
 //    public static FourSquareRX createRx() {
 //        return new Retrofit.Builder()
@@ -42,11 +45,7 @@ public class FourSquareAPI {
 //
 //    }
 
-    public interface getNearPlace {
-        @GET("venues/search")
-        Call <FoursquareSearch> searchResults(@Query("ll") String ll,
-                          @Query("oauth_token") String oauth_token,
-                          @Query("v") String v);
-    }
+
+
 
 }
