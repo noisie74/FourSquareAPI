@@ -21,7 +21,7 @@ public interface FourSquareAPI {
 
 
     @GET("venues/search")
-    Call<FoursquareSearch> searchResults(@Query("ll") String ll,
+    Observable<FoursquareSearch> searchResults(@Query("ll") String ll,
                                          @Query("oauth_token") String oauth_token,
                                          @Query("v") String v);
 

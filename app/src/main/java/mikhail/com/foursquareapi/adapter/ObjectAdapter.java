@@ -9,17 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mikhail.com.foursquareapi.MainActivity;
 import mikhail.com.foursquareapi.R;
 import mikhail.com.foursquareapi.interfaces.IClickItem;
 import mikhail.com.foursquareapi.model.Venue;
-import mikhail.com.foursquareapi.util.CircleTransform;
 
 /**
  * Created by Mikhail on 7/2/16.
@@ -82,7 +78,7 @@ public class ObjectAdapter<T> extends RecyclerView.Adapter<ObjectAdapter.MyViewH
 
         context = parent.getContext();
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.content_main, parent, false);
+                .inflate(R.layout.fragment_main, parent, false);
 
         return new MyViewHolder(itemView);
     }
