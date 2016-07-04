@@ -61,7 +61,7 @@ public class GetPresenter {
 
                     @Override
                     public void onNext(Response<FoursquareSearch> response) {
-                        mView.onRequestSuccess(response.body().getItems());
+                        mView.onRequestSuccess(response.body().getResponse().getVenues());
                     }
                 });
     }

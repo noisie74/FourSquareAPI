@@ -1,85 +1,132 @@
 package mikhail.com.foursquareapi;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 
 import java.util.ArrayList;
-import java.util.List;
 
-import mikhail.com.foursquareapi.adapter.FourSquareAdapter;
-import mikhail.com.foursquareapi.api.FourSquareAPI;
-import mikhail.com.foursquareapi.model.FoursquareSearch;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import mikhail.com.foursquareapi.adapter.ObjectAdapter;
+import mikhail.com.foursquareapi.fragment.MainFragment;
+import mikhail.com.foursquareapi.fragment.VenueFragment;
+import mikhail.com.foursquareapi.interfaces.IClickItem;
+import mikhail.com.foursquareapi.interfaces.ILoadData;
+import mikhail.com.foursquareapi.model.Response;
+import mikhail.com.foursquareapi.model.Venue;
+import mikhail.com.foursquareapi.presenter.GetPresenter;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IClickItem, ILoadData {
 
-    protected RecyclerView recyclerView;
-    private FourSquareAdapter fourSquareAdapter;
-    private ArrayList<FoursquareSearch.response.VenuesObj> listOfVenues;
 
-    public final String coordinates = "37.809,-122.273";
-    public final String token = "JCWKUHGL0GRSEKVGC2A5TAOAAAR3S1AXIW0CLTYTJWYPCD55";
-    public final String version = "20160620";
+    //    private ArrayList<FoursquareSearch.response.VenuesObj> listOfVenues;
+//    private ObjectAdapter fourSquareAdapter;
+    private static final String BACKSTACK = "MainActivity";
+//    @BindView(R.id.container)
+//    FrameLayout mViewContainer;
+    @BindView(R.id.progress_bar_main)
+    ProgressBar mLoading;
+
+    private GetPresenter mPresenter;
+
+
+    @Override
+    public void onClick(Venue venue) {
+        //control click item
+        if (findViewById(R.id.venue_container) != null) {
+
+            getVenueFragment().loadWebView(venue);
+        } else {
+            FragmentTransaction f = getSupportFragmentManager().beginTransaction();
+            f.replace(R.id.container, VenueFragment.createNewVenueFragment(venue));
+            f.addToBackStack(BACKSTACK);
+            f.commit();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setViews();
-        getPlaces();
-    }
+        ButterKnife.bind(this);
 
-    private void setViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        listOfVenues = new ArrayList<>();
+        mPresenter = new GetPresenter(this);
+        mPresenter.loadVenues(false);
     }
 
 
-    private void getPlaces() {
+    @Override
+    public void onLoadData() {
+        mPresenter.loadVenues(true);
+    }
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.foursquare.com/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    private MainFragment getMainragment() {
+        MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        return fragment;
+    }
 
-        FourSquareAPI.getNearPlace places = retrofit.create(FourSquareAPI.getNearPlace.class);
-
-        Call<FoursquareSearch> call = places.searchResults(coordinates, token, version);
-
-        call.enqueue(new Callback<FoursquareSearch>() {
-            @Override
-            public void onResponse(Call<FoursquareSearch> call, Response<FoursquareSearch> response) {
-
-                FoursquareSearch foursquareSearch = response.body();
-
-                List<FoursquareSearch.response.VenuesObj> venuesObjs = foursquareSearch.getResponse().venues;
-
-                listOfVenues.addAll(venuesObjs);
+    private VenueFragment getVenueFragment() {
+        VenueFragment venueFragment = (VenueFragment) getSupportFragmentManager().findFragmentById(R.id.venue_container);
+        return venueFragment;
+    }
 
 
-                fourSquareAdapter = new FourSquareAdapter(listOfVenues);
-                recyclerView.setAdapter(fourSquareAdapter);
-                fourSquareAdapter.notifyDataSetChanged();
-                Log.d("MainActivity", "Call success!");
+    public void showProgress(boolean isShow) {
+        mLoading.setVisibility(isShow ? View.VISIBLE : View.GONE);
 
+    }
+
+    public void onRefreshDone() {
+        getMainragment().onRefreshDone();
+    }
+
+    public void onRequestFail(String error) {
+        Log.w("MainActivity", "Error: " + error);
+        Toast.makeText(this, "Error. Please try again!", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    public void onRequestSuccess(ArrayList<Venue> listVenue) {
+        Venue venue = null;
+        if (listVenue.size() > 0)
+            venue = listVenue.get(0).getVenueUrl();
+
+        MainFragment fragment = getMainragment();
+        if (fragment == null) {
+
+            initFragments(listVenue, venue);
+        } else {
+            fragment.onRequestSuccess(listVenue);
+            if (findViewById(R.id.venue_container) != null) {
+                getVenueFragment().loadWebView(venue);
             }
-
-            @Override
-            public void onFailure(Call<FoursquareSearch> call, Throwable t) {
-                Log.d("MainActivity", "Call Failed!" + t.getMessage());
-
-            }
-        });
+        }
     }
+
+    private void initFragments(ArrayList<Venue> listVenue, Venue venue) {
+        FragmentTransaction f = getSupportFragmentManager().beginTransaction();
+        MainFragment mainFragment = MainFragment.createNewVenueFragment(listVenue);
+        mainFragment.setIClickItem(this);
+        mainFragment.setILoadData(this);
+        f.add(R.id.container, mainFragment);
+        // the fragment_container FrameLayout
+        if (findViewById(R.id.venue_container) != null) {
+            f.add(R.id.venue_container, VenueFragment.createNewVenueFragment(venue));
+        }
+        f.commit();
+
+    }
+
+
 
 
 }
