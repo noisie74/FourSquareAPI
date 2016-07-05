@@ -2,23 +2,27 @@ package mikhail.com.foursquareapi.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Mikhail on 6/17/16.
  */
 
-
 public class Categories {
 
-    @SerializedName("name")
-    private String categoryName;
-    private Icon icon;
+    //    @SerializedName("name")
+    String name;
+    Icon icon;
 
-    public String getCategoryName() {
-        return categoryName;
+    public Categories() {
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Icon getIcon() {

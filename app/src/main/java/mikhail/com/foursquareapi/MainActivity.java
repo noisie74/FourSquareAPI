@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
     public void onRequestSuccess(List<Venue> listVenue) {
         String venueURL = null;
         if (listVenue.size() > 0)
-            venueURL = listVenue.get(0).getVenueUrl();
+            venueURL = listVenue.get(0).getUrl();
 
         MainFragment fragment = getMainragment();
         if (fragment == null) {

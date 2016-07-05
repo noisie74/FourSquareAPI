@@ -65,7 +65,7 @@ public class MainFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle bun = getArguments();
-//        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
+        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
 
 
         ArrayList<Venue> list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));

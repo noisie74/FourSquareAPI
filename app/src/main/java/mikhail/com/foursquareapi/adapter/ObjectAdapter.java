@@ -92,7 +92,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
 
         holder.parentView.setTag(holder);
 
-        holder.placeName.setText(data.getVenueName());
+        holder.placeName.setText(data.getName());
 //        Log.d("Name",  data.getVenueName().toString());
 //        holder.placeCategory.setText(data.getCategories().get(position).getCategoryName());
 
@@ -100,7 +100,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
             @Override
             public void onClick(View v) {
                 if (mIclickItem != null){
-                    mIclickItem.onClick(venueList.get(position).getVenueUrl());
+                    mIclickItem.onClick(venueList.get(position).getUrl());
                 }
             }
         });

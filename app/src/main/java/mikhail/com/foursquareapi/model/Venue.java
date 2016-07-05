@@ -15,48 +15,44 @@ import java.util.List;
 @Parcel(Parcel.Serialization.BEAN)
 public class Venue {
 
-//    @SerializedName("id")
-    String venueID;
-//    @SerializedName("name")
-    String venueName;
-//    @SerializedName("url")
-    String venueUrl;
-    private List<Categories> categories;
-
-//    @ParcelConstructor
-//    public Venue(String venueName, String venueUrl) {
-//        this.venueName = venueName;
-//        this.venueUrl = venueUrl;
-//    }
-
+    String id;
+    String name;
+    String url;
+    List<Categories> categories;
 
     @ParcelConstructor
-    public Venue(String venueUrl) {
-        this.venueUrl = venueUrl;
+    public Venue(String name, String url) {
+        this.name = name;
+        this.url = url;
     }
+
+//     @ParcelConstructor
+//    public Venue(List<Categories> categories) {
+//        this.categories = categories;
+//    }
 
     public Venue() {
     }
 
     public String getVenueID() {
-        return venueID;
+        return id;
     }
 
-    public String getVenueName() {
-        return venueName;
+    public String getName() {
+        return name;
     }
 
-    public void setVenueName(String venueName) {
-        this.venueName = venueName;
+    public void setVenueName(String name) {
+        this.name = name;
     }
 
-    public String getVenueUrl() {
-        return venueUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setVenueUrl(String venueUrl) {
-        this.venueUrl = venueUrl;
-    }
+//    public void setVenueUrl(String venueUrl) {
+//        this.venueUrl = venueUrl;
+//    }
 
     public List<Categories> getCategories() {
         return categories;
