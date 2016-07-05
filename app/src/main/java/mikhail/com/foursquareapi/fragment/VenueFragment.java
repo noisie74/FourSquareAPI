@@ -33,16 +33,20 @@ public class VenueFragment extends BaseFragment {
     @BindView(R.id.progress_bar)
     public ProgressBar progress;
 
-    public Venue venues;
+    public String venueURL;
     public String htmlString;
 
 
-    public static VenueFragment createNewVenueFragment(Venue venues) {
+    public static VenueFragment createNewVenueFragment(String venueURL) {
         VenueFragment fragment = new VenueFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRAS_DETAILS, Parcels.wrap(venues));
+        bundle.putParcelable(EXTRAS_DETAILS, Parcels.wrap(venueURL));
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void setVenueURL(String venueURL) {
+        this.venueURL = venueURL;
     }
 
     @Nullable
@@ -50,20 +54,20 @@ public class VenueFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_venue, container, false);
         ButterKnife.bind(this, view);
-        venues = getArguments().getParcelable(EXTRAS_DETAILS);
+        venueURL = getArguments().getParcelable(EXTRAS_DETAILS);
 
-        loadWebView(venues);
+        loadWebView(venueURL);
         return view;
     }
 
 
-    public void loadWebView(Venue venues) {
+    public void loadWebView(String venueURL) {
         WebSettings webSettings = venueView.getSettings();
         venueView.setWebViewClient(new WebViewClientDemo()); //opens url in app, not in default browser
         webSettings.setJavaScriptEnabled(true); //turn js on for hacking and giving better ux
         venueView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 
-        venueView.loadUrl(venues.getVenueUrl());
+        venueView.loadUrl(venueURL);
     }
 
 

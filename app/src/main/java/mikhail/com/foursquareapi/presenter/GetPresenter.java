@@ -9,6 +9,7 @@ import mikhail.com.foursquareapi.api.FourSquareAPI;
 import mikhail.com.foursquareapi.model.FoursquareSearch;
 import mikhail.com.foursquareapi.module.ApiComponent;
 import mikhail.com.foursquareapi.module.ApiModule;
+import mikhail.com.foursquareapi.module.DaggerApiComponent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,11 +29,11 @@ public class GetPresenter {
     MainActivity mView;
     public final String COORDINATES = "37.809,-122.273";
     public final String TOKEN = "JCWKUHGL0GRSEKVGC2A5TAOAAAR3S1AXIW0CLTYTJWYPCD55";
-    public final String VERSION = "20160702";
+    public final String VERSION = "20160617";
 
     public GetPresenter(MainActivity view) {
         this.mView = view;
-        mApiComponent = DaggerFourSquareComponent.builder()
+        mApiComponent = DaggerApiComponent.builder()
                 .apiModule(new ApiModule())
                 .build();
         mApi = mApiComponent.provideApiService();
@@ -61,7 +62,9 @@ public class GetPresenter {
 
                     @Override
                     public void onNext(Response<FoursquareSearch> response) {
-                        mView.onRequestSuccess(response.body().getResponse().getVenues());
+                        FoursquareSearch data = response.body();
+                        mView.onRequestSuccess(data.getResponse().getVenues());
+                        Log.d("MainActivity", "Call Success");
                     }
                 });
     }

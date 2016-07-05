@@ -19,9 +19,8 @@ import rx.Observable;
  */
 public interface FourSquareAPI {
 
-
     @GET("venues/search")
-    Observable<FoursquareSearch> searchResults(@Query("ll") String ll,
+    Observable<Response<FoursquareSearch>> searchResults(@Query("ll") String ll,
                                          @Query("oauth_token") String oauth_token,
                                          @Query("v") String v);
 

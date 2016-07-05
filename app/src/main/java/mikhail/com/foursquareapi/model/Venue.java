@@ -15,23 +15,28 @@ import java.util.List;
 @Parcel(Parcel.Serialization.BEAN)
 public class Venue {
 
-    @SerializedName("id")
+//    @SerializedName("id")
     String venueID;
-    @SerializedName("name")
+//    @SerializedName("name")
     String venueName;
-    @SerializedName("url")
+//    @SerializedName("url")
     String venueUrl;
+    private List<Categories> categories;
+
+//    @ParcelConstructor
+//    public Venue(String venueName, String venueUrl) {
+//        this.venueName = venueName;
+//        this.venueUrl = venueUrl;
+//    }
+
 
     @ParcelConstructor
-    public Venue(String venueName, String venueUrl){
-        this.venueName = venueName;
+    public Venue(String venueUrl) {
         this.venueUrl = venueUrl;
     }
 
     public Venue() {
     }
-
-    private List<Categories> categories;
 
     public String getVenueID() {
         return venueID;
@@ -57,7 +62,4 @@ public class Venue {
         return categories;
     }
 
-    public void setCategories(List<Categories> categories) {
-        this.categories = categories;
-    }
 }

@@ -10,7 +10,7 @@ import mikhail.com.foursquareapi.api.FourSquareAPI;
  */
 
 @Singleton
-@Component
+@Component(modules = {ApiModule.class})
 public interface ApiComponent {
 
     FourSquareAPI provideApiService();

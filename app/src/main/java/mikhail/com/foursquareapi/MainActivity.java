@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,23 +31,23 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
     //    private ArrayList<FoursquareSearch.response.VenuesObj> listOfVenues;
 //    private ObjectAdapter fourSquareAdapter;
     private static final String BACKSTACK = "MainActivity";
-//    @BindView(R.id.container)
-//    FrameLayout mViewContainer;
-    @BindView(R.id.progress_bar_main)
+    @BindView(R.id.container)
+    FrameLayout mViewContainer;
+    @BindView(R.id.progress_bar)
     ProgressBar mLoading;
 
     private GetPresenter mPresenter;
 
 
     @Override
-    public void onClick(Venue venue) {
+    public void onClick(String venueURL) {
         //control click item
         if (findViewById(R.id.venue_container) != null) {
 
-            getVenueFragment().loadWebView(venue);
+            getVenueFragment().loadWebView(venueURL);
         } else {
             FragmentTransaction f = getSupportFragmentManager().beginTransaction();
-            f.replace(R.id.container, VenueFragment.createNewVenueFragment(venue));
+            f.replace(R.id.container, VenueFragment.createNewVenueFragment(venueURL));
             f.addToBackStack(BACKSTACK);
             f.commit();
         }
@@ -68,16 +69,6 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
         mPresenter.loadVenues(true);
     }
 
-    private MainFragment getMainragment() {
-        MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.container);
-        return fragment;
-    }
-
-    private VenueFragment getVenueFragment() {
-        VenueFragment venueFragment = (VenueFragment) getSupportFragmentManager().findFragmentById(R.id.venue_container);
-        return venueFragment;
-    }
-
 
     public void showProgress(boolean isShow) {
         mLoading.setVisibility(isShow ? View.VISIBLE : View.GONE);
@@ -95,38 +86,46 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
     }
 
 
-    public void onRequestSuccess(ArrayList<Venue> listVenue) {
-        Venue venue = null;
+    public void onRequestSuccess(List<Venue> listVenue) {
+        String venueURL = null;
         if (listVenue.size() > 0)
-            venue = listVenue.get(0).getVenueUrl();
+            venueURL = listVenue.get(0).getVenueUrl();
 
         MainFragment fragment = getMainragment();
         if (fragment == null) {
 
-            initFragments(listVenue, venue);
+            initFragments(listVenue, venueURL);
         } else {
             fragment.onRequestSuccess(listVenue);
             if (findViewById(R.id.venue_container) != null) {
-                getVenueFragment().loadWebView(venue);
+                getVenueFragment().loadWebView(venueURL);
             }
         }
     }
 
-    private void initFragments(ArrayList<Venue> listVenue, Venue venue) {
+    private void initFragments(List<Venue> list, String venueURL) {
         FragmentTransaction f = getSupportFragmentManager().beginTransaction();
-        MainFragment mainFragment = MainFragment.createNewVenueFragment(listVenue);
+        MainFragment mainFragment = MainFragment.createNewVenueFragment(list);
         mainFragment.setIClickItem(this);
         mainFragment.setILoadData(this);
+        Log.d("MainActivity", "MainFragment is seen");
         f.add(R.id.container, mainFragment);
         // the fragment_container FrameLayout
         if (findViewById(R.id.venue_container) != null) {
-            f.add(R.id.venue_container, VenueFragment.createNewVenueFragment(venue));
+            f.add(R.id.venue_container, VenueFragment.createNewVenueFragment(venueURL));
         }
         f.commit();
 
     }
 
+    private MainFragment getMainragment() {
+        MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        return fragment;
+    }
 
-
+    private VenueFragment getVenueFragment() {
+        VenueFragment venueFragment = (VenueFragment) getSupportFragmentManager().findFragmentById(R.id.venue_container);
+        return venueFragment;
+    }
 
 }

@@ -39,12 +39,12 @@ public class MainFragment extends BaseFragment {
     IClickItem mIClickItem;
     ILoadData mILoadData;
 
-    ArrayList<Venue> list;
+    List<Venue> list;
 
-    public static MainFragment createNewVenueFragment(ArrayList<Venue> listVenue){
+    public static MainFragment createNewVenueFragment(List<Venue> list){
         MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRAS_LIST, Parcels.wrap(listVenue));
+        bundle.putParcelable(EXTRAS_LIST, Parcels.wrap(list));
         fragment.setArguments(bundle);
         return  fragment;
     }
@@ -65,9 +65,15 @@ public class MainFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle bun = getArguments();
-        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
+//        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
 
-        initAdapter();
+
+        ArrayList<Venue> list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
+        mAdapter = new ObjectAdapter(this.getActivity(), list, mIClickItem);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
+
+//        initAdapter();
         initSwipeLayout();
 
         getActivity().setTitle(R.string.app_name);

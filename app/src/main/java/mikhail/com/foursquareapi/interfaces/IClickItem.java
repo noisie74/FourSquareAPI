@@ -8,5 +8,5 @@ import mikhail.com.foursquareapi.model.Venue;
  * Created by Mikhail on 6/17/16.
  */
 public interface IClickItem {
-        void onClick(Venue venues);
+        void onClick(String venueURL);
 }
