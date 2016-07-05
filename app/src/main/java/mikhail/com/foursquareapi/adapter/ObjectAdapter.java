@@ -84,12 +84,20 @@ public class ObjectAdapter<T> extends RecyclerView.Adapter<ObjectAdapter.MyViewH
     }
 
     @Override
-    public void onBindViewHolder(ObjectAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(ObjectAdapter.MyViewHolder holder, final int position) {
         T modelObject = this.modelObject.get(position);
 
         holder.placeName.setText(modelObject.toString());
         holder.placeCategory.setText(modelObject.toString());
 
+        holder.parentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIclickItem != null){
+                    mIclickItem.onClick(venueList.get(position));
+                }
+            }
+        });
 
 
     }
