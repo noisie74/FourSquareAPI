@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +21,13 @@ import butterknife.ButterKnife;
 import mikhail.com.foursquareapi.R;
 import mikhail.com.foursquareapi.interfaces.IClickItem;
 import mikhail.com.foursquareapi.model.Venue;
+import mikhail.com.foursquareapi.util.CircleTransform;
 
 /**
  * Created by Mikhail on 7/2/16.
  */
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHolder> {
 
-    //    List<T> modelObject;
     ArrayList<Venue> venueList;
     IClickItem mIclickItem;
     Context context;
@@ -86,55 +89,43 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-//        T modelObject = this.modelObject.get(position);
+    public void onBindViewHolder(MyViewHolder holder, int position) {
 
         Venue data = venueList.get(position);
 
         holder.parentView.setTag(holder);
 
         holder.placeName.setText(data.getName());
-//        Log.d("Name",  data.getVenueName().toString());
-//        String categoryName = data.getCategories().get(-1).getCategoryName();
-//
-//        if (categoryName != null){
-//
-//
-//            holder.placeCategory.setText(categoryName);
-//        }
 
-//        for (int i = 0; i < venueList.size(); i++) {
-//
-//            if (i < venueList.size()) {
-//                return;
-//            } else {
-//
-//                String categoryName = data.getCategories().get(i).getCategoryName();
-//                if (categoryName != null) {
-//
-//                    holder.placeCategory.setText(categoryName);
-//                }
-//            }
-//
-//        }
+        try {
+
+            holder.placeCategory.setText(data.getCategoriesObj().get(0).getCategoryName());
+        } catch (IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+        }
+
+        bindData(data,holder);
+
+//        Glide.with(context).load(data.getCategoriesObj().get(0).getIcon().getPrefix() +
+//                data.getCategoriesObj().get(0).getIcon().getSuffix())
+//                .placeholder(R.drawable.placeholder)
+//                .transform(new CircleTransform(context))
+//                .into(holder.placeIcon);
+
+    }
+
+    private void bindData(final Venue data, MyViewHolder holder){
+
+
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mIclickItem != null) {
-                    mIclickItem.onClick(venueList.get(position));
+                    mIclickItem.onClick(data);
                 }
             }
         });
 
-
-    }
-
-    public void bindData(List<Venue> venueList, MyViewHolder holder) {
-
-//        Glide.with(context).load(venueList.get(0).getCategories().get(0).getIcon().getPrefix())
-//                .placeholder(R.drawable.placeholder)
-//                .transform(new CircleTransform(context)
-//                .into(place);
     }
 
     @Override

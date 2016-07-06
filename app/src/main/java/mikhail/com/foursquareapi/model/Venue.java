@@ -1,12 +1,6 @@
 package mikhail.com.foursquareapi.model;
 
-import android.graphics.Bitmap;
 import android.os.Parcelable;
-
-import com.google.gson.annotations.SerializedName;
-
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +13,7 @@ public class Venue implements Parcelable{
     String id;
     String name;
     String url;
-    ArrayList<Categories> categories;
+    ArrayList<CategoriesObj> categories;
 //
 //    @ParcelConstructor
 //    public Venue(String name, String url) {
@@ -28,7 +22,7 @@ public class Venue implements Parcelable{
 //    }
 
 //     @ParcelConstructor
-//    public Venue(List<Categories> categories) {
+//    public Venue(List<CategoriesObj> categories) {
 //        this.categories = categories;
 //    }
 
@@ -55,7 +49,7 @@ public class Venue implements Parcelable{
 //        this.venueUrl = venueUrl;
 //    }
 
-    public ArrayList<Categories> getCategories() {
+    public ArrayList<CategoriesObj> getCategoriesObj() {
         return categories;
     }
 

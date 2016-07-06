@@ -11,16 +11,13 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mikhail.com.foursquareapi.adapter.ObjectAdapter;
 import mikhail.com.foursquareapi.fragment.MainFragment;
 import mikhail.com.foursquareapi.fragment.VenueFragment;
 import mikhail.com.foursquareapi.interfaces.IClickItem;
 import mikhail.com.foursquareapi.interfaces.ILoadData;
-import mikhail.com.foursquareapi.model.Response;
 import mikhail.com.foursquareapi.model.Venue;
 import mikhail.com.foursquareapi.presenter.GetPresenter;
 
@@ -86,10 +83,8 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
 
     public void onRequestSuccess(ArrayList<Venue> listVenue) {
         String venueURL = null;
-//        int position = -1;
         if (listVenue.size() > 0)
             venueURL = listVenue.get(0).getUrl();
-//        position++;
 
         MainFragment fragment = getMainragment();
         if (fragment == null) {

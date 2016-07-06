@@ -10,13 +10,13 @@ import org.parceler.Parcel;
  * Created by Mikhail on 6/17/16.
  */
 
-public class Categories {
+public class CategoriesObj implements Parcelable {
 
     @SerializedName("name")
     String categoryName;
     Icon icon;
 
-//    public Categories() {
+//    public CategoriesObj() {
 //    }
 
 
@@ -32,4 +32,13 @@ public class Categories {
         this.icon = icon;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(android.os.Parcel dest, int flags) {
+
+    }
 }

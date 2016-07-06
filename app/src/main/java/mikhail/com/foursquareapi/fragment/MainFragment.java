@@ -77,22 +77,12 @@ public class MainFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-//        initAdapter();
         initSwipeLayout();
 
         getActivity().setTitle(R.string.app_name);
         return view;
     }
 
-    public void initAdapter(){
-
-        if (mAdapter != null){
-
-            mAdapter = new ObjectAdapter(this.getActivity(), list, mIClickItem);
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
     @Override
     public void onDestroy() {
