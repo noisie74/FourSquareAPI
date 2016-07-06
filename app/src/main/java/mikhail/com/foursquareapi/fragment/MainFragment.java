@@ -39,12 +39,14 @@ public class MainFragment extends BaseFragment {
     IClickItem mIClickItem;
     ILoadData mILoadData;
 
-    List<Venue> list;
+    ArrayList<Venue> list;
 
-    public static MainFragment createNewVenueFragment(List<Venue> list){
+    public static MainFragment createNewVenueFragment(ArrayList<Venue> list){
         MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRAS_LIST, Parcels.wrap(list));
+//        bundle.putParcelable(EXTRAS_LIST, Parcels.wrap(list));
+        bundle.putParcelableArrayList(EXTRAS_LIST,list);
+
         fragment.setArguments(bundle);
         return  fragment;
     }
@@ -65,30 +67,22 @@ public class MainFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle bun = getArguments();
-        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
 
+//        list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
+//        ArrayList<Venue> list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
 
-        ArrayList<Venue> list = Parcels.unwrap(bun.getParcelable(EXTRAS_LIST));
+        ArrayList<Venue> list = bun.getParcelableArrayList(EXTRAS_LIST);
+
         mAdapter = new ObjectAdapter(this.getActivity(), list, mIClickItem);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-//        initAdapter();
         initSwipeLayout();
 
         getActivity().setTitle(R.string.app_name);
         return view;
     }
 
-    public void initAdapter(){
-
-        if (mAdapter != null){
-
-            mAdapter = new ObjectAdapter(this.getActivity(), list, mIClickItem);
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
     @Override
     public void onDestroy() {
@@ -105,7 +99,7 @@ public class MainFragment extends BaseFragment {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void onRequestSuccess(List<Venue> listVenue) {
+    public void onRequestSuccess(ArrayList<Venue> listVenue) {
         mAdapter.setVenueList(listVenue);
         mAdapter.notifyDataSetChanged();
     }

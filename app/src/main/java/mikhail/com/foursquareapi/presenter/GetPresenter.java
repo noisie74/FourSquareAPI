@@ -28,8 +28,9 @@ public class GetPresenter {
     ApiComponent mApiComponent;
     MainActivity mView;
     public final String COORDINATES = "37.809,-122.273";
+    public final String COORDINATES_NYC = "40.7,-74";
     public final String TOKEN = "JCWKUHGL0GRSEKVGC2A5TAOAAAR3S1AXIW0CLTYTJWYPCD55";
-    public final String VERSION = "20160617";
+    public final String VERSION = "20160702";
 
     public GetPresenter(MainActivity view) {
         this.mView = view;

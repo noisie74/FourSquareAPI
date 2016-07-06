@@ -1,5 +1,8 @@
 package mikhail.com.foursquareapi.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Mikhail on 7/2/16.
  */
@@ -23,4 +26,5 @@ public class Icon {
     public void setSuffix(String suffix) {
         this.suffix = suffix;
     }
+
 }

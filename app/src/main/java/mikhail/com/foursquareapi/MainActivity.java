@@ -11,25 +11,19 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mikhail.com.foursquareapi.adapter.ObjectAdapter;
 import mikhail.com.foursquareapi.fragment.MainFragment;
 import mikhail.com.foursquareapi.fragment.VenueFragment;
 import mikhail.com.foursquareapi.interfaces.IClickItem;
 import mikhail.com.foursquareapi.interfaces.ILoadData;
-import mikhail.com.foursquareapi.model.Response;
 import mikhail.com.foursquareapi.model.Venue;
 import mikhail.com.foursquareapi.presenter.GetPresenter;
 
 
 public class MainActivity extends AppCompatActivity implements IClickItem, ILoadData {
 
-
-    //    private ArrayList<FoursquareSearch.response.VenuesObj> listOfVenues;
-//    private ObjectAdapter fourSquareAdapter;
     private static final String BACKSTACK = "MainActivity";
     @BindView(R.id.container)
     FrameLayout mViewContainer;
@@ -40,14 +34,15 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
 
 
     @Override
-    public void onClick(String venueURL) {
+    public void onClick(Venue venue) {
         //control click item
         if (findViewById(R.id.venue_container) != null) {
 
-            getVenueFragment().loadWebView(venueURL);
+            String url = venue.getUrl();
+            getVenueFragment().loadWebView(url);
         } else {
             FragmentTransaction f = getSupportFragmentManager().beginTransaction();
-            f.replace(R.id.container, VenueFragment.createNewVenueFragment(venueURL));
+            f.replace(R.id.container, VenueFragment.createNewVenueFragment(venue));
             f.addToBackStack(BACKSTACK);
             f.commit();
         }
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
     }
 
 
-    public void onRequestSuccess(List<Venue> listVenue) {
+    public void onRequestSuccess(ArrayList<Venue> listVenue) {
         String venueURL = null;
         if (listVenue.size() > 0)
             venueURL = listVenue.get(0).getUrl();
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
         MainFragment fragment = getMainragment();
         if (fragment == null) {
 
-            initFragments(listVenue, venueURL);
+            initFragments(listVenue);
         } else {
             fragment.onRequestSuccess(listVenue);
             if (findViewById(R.id.venue_container) != null) {
@@ -103,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
         }
     }
 
-    private void initFragments(List<Venue> list, String venueURL) {
+    private void initFragments(ArrayList<Venue> list) {
         FragmentTransaction f = getSupportFragmentManager().beginTransaction();
         MainFragment mainFragment = MainFragment.createNewVenueFragment(list);
         mainFragment.setIClickItem(this);
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements IClickItem, ILoad
         f.add(R.id.container, mainFragment);
         // the fragment_container FrameLayout
         if (findViewById(R.id.venue_container) != null) {
-            f.add(R.id.venue_container, VenueFragment.createNewVenueFragment(venueURL));
+            f.add(R.id.venue_container, VenueFragment.createNewVenueFragment(list.get(0)));
         }
         f.commit();
 
