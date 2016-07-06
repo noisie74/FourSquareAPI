@@ -11,12 +11,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mikhail.com.foursquareapi.MainActivity;
 import mikhail.com.foursquareapi.R;
 import mikhail.com.foursquareapi.model.Venue;
 
@@ -37,27 +39,37 @@ public class VenueFragment extends BaseFragment {
     public String htmlString;
 
 
-    public static VenueFragment createNewVenueFragment(String venueURL) {
+    public static VenueFragment createNewVenueFragment(Venue venue) {
         VenueFragment fragment = new VenueFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRAS_DETAILS, Parcels.wrap(venueURL));
+//        bundle.putParcelable(EXTRAS_DETAILS, Parcels.wrap(venueURL));
+
+        bundle.putParcelable(EXTRAS_DETAILS, venue);
+
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public void setVenueURL(String venueURL) {
-        this.venueURL = venueURL;
-    }
+//    public void setVenueURL(String venueURL) {
+//        this.venueURL = venueURL;
+//    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_venue, container, false);
         ButterKnife.bind(this, view);
-        venueURL = getArguments().getParcelable(EXTRAS_DETAILS);
 
-        loadWebView(venueURL);
-        return view;
+        Venue venue = getArguments().getParcelable(EXTRAS_DETAILS);
+        if (venue != null) {
+            String url = venue.getUrl();
+            loadWebView(url);
+        } else
+            Toast.makeText(getContext(),"No URL Available for this place",Toast.LENGTH_SHORT).show();
+
+//       String venueURL = getArguments().getParcelable(EXTRAS_DETAILS);
+
+            return view;
     }
 
 

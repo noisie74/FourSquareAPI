@@ -1,5 +1,6 @@
 package mikhail.com.foursquareapi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,9 +8,9 @@ import java.util.List;
  */
 public class Response {
 
-    private List<Venue> venues;
+    private ArrayList<Venue> venues;
 
-    public List<Venue> getVenues() {
+    public ArrayList<Venue> getVenues() {
         return venues;
     }
 }

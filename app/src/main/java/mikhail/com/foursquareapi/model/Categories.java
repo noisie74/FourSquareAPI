@@ -1,5 +1,7 @@
 package mikhail.com.foursquareapi.model;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -10,19 +12,16 @@ import org.parceler.Parcel;
 
 public class Categories {
 
-    //    @SerializedName("name")
-    String name;
+    @SerializedName("name")
+    String categoryName;
     Icon icon;
 
-    public Categories() {
-    }
+//    public Categories() {
+//    }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
     public Icon getIcon() {
@@ -32,4 +31,5 @@ public class Categories {
     public void setIcon(Icon icon) {
         this.icon = icon;
     }
+
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,13 +24,13 @@ import mikhail.com.foursquareapi.model.Venue;
  */
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHolder> {
 
-//    List<T> modelObject;
-    List<Venue> venueList;
+    //    List<T> modelObject;
+    ArrayList<Venue> venueList;
     IClickItem mIclickItem;
     Context context;
     private Activity mActivity;
 
-    public ObjectAdapter(Activity activity, List<Venue> modelObject, IClickItem mIclickItem) {
+    public ObjectAdapter(Activity activity, ArrayList<Venue> modelObject, IClickItem mIclickItem) {
         this.mActivity = activity;
         this.venueList = modelObject;
         this.mIclickItem = mIclickItem;
@@ -60,7 +61,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
         }
     }
 
-    public void setVenueList(List<Venue> list) {
+    public void setVenueList(ArrayList<Venue> list) {
         this.venueList = list;
     }
 
@@ -94,13 +95,33 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
 
         holder.placeName.setText(data.getName());
 //        Log.d("Name",  data.getVenueName().toString());
-//        holder.placeCategory.setText(data.getCategories().get(position).getCategoryName());
+//        String categoryName = data.getCategories().get(-1).getCategoryName();
+//
+//        if (categoryName != null){
+//
+//
+//            holder.placeCategory.setText(categoryName);
+//        }
 
+//        for (int i = 0; i < venueList.size(); i++) {
+//
+//            if (i < venueList.size()) {
+//                return;
+//            } else {
+//
+//                String categoryName = data.getCategories().get(i).getCategoryName();
+//                if (categoryName != null) {
+//
+//                    holder.placeCategory.setText(categoryName);
+//                }
+//            }
+//
+//        }
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mIclickItem != null){
-                    mIclickItem.onClick(venueList.get(position).getUrl());
+                if (mIclickItem != null) {
+                    mIclickItem.onClick(venueList.get(position));
                 }
             }
         });
@@ -108,7 +129,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.MyViewHold
 
     }
 
-    public void bindData(List<Venue> venueList, MyViewHolder holder){
+    public void bindData(List<Venue> venueList, MyViewHolder holder) {
 
 //        Glide.with(context).load(venueList.get(0).getCategories().get(0).getIcon().getPrefix())
 //                .placeholder(R.drawable.placeholder)
