@@ -11,7 +11,7 @@ Libraries used:
 <html>
 <body>
 <p>
-<img src="http://i.imgur.com/SAw5sRS.jpg" width = "1200" height = "675">
+<img src="http://i.imgur.com/SAw5sRS.jpg" width = "800" height = "375">
 </p>
 </body>
 </html>
