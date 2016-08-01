@@ -70,49 +70,4 @@ public class GetPresenter {
                 });
     }
 
-
-//    private void getPlaces() {
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://api.foursquare.com/v2/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        FourSquareAPI.getNearPlace places = retrofit.create(FourSquareAPI.getNearPlace.class);
-//
-//        Call<FoursquareSearch> call = places.searchResults(coordinates, token, version);
-//
-//        call.enqueue(new Callback<FoursquareSearch>() {
-//            @Override
-//            public void onResponse(Call<FoursquareSearch> call, Response<FoursquareSearch> response) {
-//
-//                FoursquareSearch foursquareSearch = response.body();
-//
-//                List<FoursquareSearch.response.VenuesObj> venuesObjs = foursquareSearch.getResponse().venues;
-//
-//                listOfVenues.addAll(venuesObjs);
-//
-//
-//                fourSquareAdapter = new FourSquareAdapter(listOfVenues);
-//                recyclerView.setAdapter(fourSquareAdapter);
-//                fourSquareAdapter.notifyDataSetChanged();
-//                Log.d("MainActivity", "Call success!");
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<FoursquareSearch> call, Throwable t) {
-//                Log.d("MainActivity", "Call Failed!" + t.getMessage());
-//
-//            }
-//        });
-//    }
-
-//    public interface FourSquareRX {
-//        @GET("venues/{explore}")
-//        Observable<Response<Places>> venues(
-//                @Path("explore") String explore,
-//                @Query("ll") String coordinates,
-//                @Query("oauth_token") String token,
-//                @Query("v") String version);
 }
